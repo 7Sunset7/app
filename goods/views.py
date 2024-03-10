@@ -3,15 +3,19 @@ from django.shortcuts import render
 from goods.models import Product
 
 
-def catalog(requst):
+def catalog(request):
 
     goods = Product.objects.all()
     context = {
         'title': 'Home - Каталог',
         'goods': goods
     }
-    return render(requst, 'goods/catalog.html', context)
+    return render(request, 'goods/catalog.html', context)
 
 
-def product(requst):
-    return render(requst, 'goods/product.html')
+def product(request, product_slug):
+    product = Product.objects.get(slug=product_slug)
+    context = {
+        'product': product
+    }
+    return render(request, 'goods/product.html', context=context)
